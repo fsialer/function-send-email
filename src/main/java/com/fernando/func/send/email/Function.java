@@ -133,7 +133,7 @@ public class Function {
             }
         });
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("SMTP_SENDER_EMAIL"));
+            message.setFrom(new InternetAddress(KeyVaultService.getSecret("SMTP_SENDER_EMAIL")));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
             message.setSubject(subject);
             message.setContent(content, "text/html");
@@ -161,8 +161,8 @@ public class Function {
     private Token obtainToken() throws IOException {
 
         HttpResponse<String> response = authorizationRestClient.obtainToken(
-                KeyVaultService.getSecret("AUTH_SERVER_CLIENT_ID"),
-                KeyVaultService.getSecret("AUTH_SERVER_CLIENT_SECRET"),
+                KeyVaultService.getSecret("CLIENT_ID_CLIENT_CREDENTIALS"),
+                KeyVaultService.getSecret("CLIENT_SECRET_CLIENT_CREDENTIALS"),
                 "client_credentials",
                 "read");
         if (response.statusCode() != 200) {
