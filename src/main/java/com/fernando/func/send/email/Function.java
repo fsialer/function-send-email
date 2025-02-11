@@ -114,18 +114,14 @@ public class Function {
 
 
     private void sendEmailSmtp(String toEmail,String content,String subject) throws MessagingException {
-        final String username = KeyVaultService.getSecret("SMTP_USER");
-        final String password = KeyVaultService.getSecret("SMTP_PASSWORD");
-//        final String username = System.getenv("SMTP_USER");
-//        final String password = System.getenv("SMTP_PASSWORD");
+        final String username = KeyVaultService.getSecret("smtp-user");
+        final String password = KeyVaultService.getSecret("smtp-password");
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-//        props.put("mail.smtp.host", System.getenv("SMTP_HOST"));
-//        props.put("mail.smtp.port", System.getenv("SMTP_PORT"));
-        props.put("mail.smtp.host", KeyVaultService.getSecret("SMTP_HOST"));
-        props.put("mail.smtp.port", KeyVaultService.getSecret("SMTP_PORT"));
+        props.put("mail.smtp.host", KeyVaultService.getSecret("smtp-host"));
+        props.put("mail.smtp.port", KeyVaultService.getSecret("smtp-port"));
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -133,7 +129,7 @@ public class Function {
             }
         });
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(KeyVaultService.getSecret("SMTP_SENDER_EMAIL")));
+            message.setFrom(new InternetAddress(KeyVaultService.getSecret("smtp-sender-email")));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
             message.setSubject(subject);
             message.setContent(content, "text/html");
@@ -141,11 +137,11 @@ public class Function {
     }
 
     private Response sendEmail(String toEmail,String content,String subject) throws IOException {
-            Email from = new Email(KeyVaultService.getSecret("SENDGRID_SENDER_EMAIL"));
+            Email from = new Email(KeyVaultService.getSecret("send-grid-sender-email"));
             Email to = new Email(toEmail);
             Content emailContent = new Content("text/html", content);
             Mail mail = new Mail(from, subject, to, emailContent);
-            SendGrid sg = new SendGrid(KeyVaultService.getSecret("SENDGRID_API_KEY"));
+            SendGrid sg = new SendGrid(KeyVaultService.getSecret("send-grid-api-key"));
             Request sendGridRequest = new Request();
             sendGridRequest.setMethod(Method.POST);
             sendGridRequest.setEndpoint("mail/send");
@@ -161,8 +157,8 @@ public class Function {
     private Token obtainToken() throws IOException {
 
         HttpResponse<String> response = authorizationRestClient.obtainToken(
-                KeyVaultService.getSecret("CLIENT_ID_CLIENT_CREDENTIALS"),
-                KeyVaultService.getSecret("CLIENT_SECRET_CLIENT_CREDENTIALS"),
+                KeyVaultService.getSecret("client-id-client-credentials"),
+                KeyVaultService.getSecret("client-secret-client-credentials"),
                 "client_credentials",
                 "read");
         if (response.statusCode() != 200) {
@@ -189,7 +185,4 @@ public class Function {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(response.body(), new TypeReference<List<Follower>>() {});
     }
-
-
-
 }
