@@ -8,7 +8,7 @@
       "problemMatcher": "$func-java-watch",
       "isBackground": true,
       "options": {
-        "cwd": "${workspaceFolder}/target/azure-functions/send-notification-1737908181466"
+        "cwd": "${workspaceFolder}/target/azure-functions/function-send-email-1737908181466"
       },
       "dependsOn": "package (functions)"
     },

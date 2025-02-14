@@ -1,6 +1,8 @@
 package com.fernando.func.send.email.client.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fernando.func.send.email.client.AuthorizationRestClient;
+import com.fernando.func.send.email.dto.Token;
 
 import java.io.IOException;
 import java.net.URI;
@@ -8,7 +10,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
-import java.util.logging.Logger;
+
+import static com.azure.core.implementation.http.rest.RestProxyUtils.LOGGER;
 
 public class AuthorizationRestClientImpl implements AuthorizationRestClient {
 
@@ -17,8 +20,10 @@ public class AuthorizationRestClientImpl implements AuthorizationRestClient {
     public AuthorizationRestClientImpl(){
         client = HttpClient.newHttpClient();
     }
+
     @Override
-    public HttpResponse<String> obtainToken(String clientId, String secret, String grantType, String scope){
+    public Token obtainToken(String clientId, String secret, String grantType, String scope) {
+
         try{
             String formData = "grant_type=".concat(grantType).concat("&scope=").concat(scope);
             String auth = clientId.concat(":").concat(secret);
@@ -29,10 +34,19 @@ public class AuthorizationRestClientImpl implements AuthorizationRestClient {
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(formData))
                     .build();
-            return client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        }catch(IOException| InterruptedException ex){
-            Logger.getLogger(AuthorizationRestClientImpl.class.getName()).severe("Error sending request: " + ex.getMessage());
+
+            HttpResponse<String> response =  client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                LOGGER.log(com.azure.core.util.logging.LogLevel.WARNING, () -> "Failed to fetch author, status code: " + response.statusCode());
+                return null;
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(response.body(), Token.class);
+        }catch(IOException|InterruptedException ex){
+            LOGGER.log(com.azure.core.util.logging.LogLevel.WARNING, () -> "Interrupted!", ex);
+            Thread.currentThread().interrupt();
             return null;
         }
+
     }
 }

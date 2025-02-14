@@ -1,7 +1,7 @@
 package com.fernando.func.send.email.client;
 
-import java.net.http.HttpResponse;
+import com.fernando.func.send.email.dto.Token;
 
 public interface AuthorizationRestClient {
-    HttpResponse<String> obtainToken(String client, String secret, String grantType, String scope);
+    Token obtainToken(String client, String secret, String grantType, String scope);
 }

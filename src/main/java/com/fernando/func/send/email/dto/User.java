@@ -6,16 +6,14 @@ public class User {
     private String names;
     private String email;
 
-    
+    public User() {
+    }
 
-    public User(Long id, String username, String names, String email) {
+    public  User(Long id, String username, String names, String email) {
         this.id = id;
         this.username = username;
         this.names = names;
         this.email = email;
-    }
-
-    public User() {
     }
 
     public Long getId() {

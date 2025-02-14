@@ -1,6 +1,6 @@
 {
   "azureFunctions.javaBuildTool": "maven",
-  "azureFunctions.deploySubpath": "target/azure-functions/send-notification-1737908181466",
+  "azureFunctions.deploySubpath": "target/azure-functions/function-send-email-1737908181466",
   "azureFunctions.projectLanguage": "Java",
   "azureFunctions.projectRuntime": "~4",
   "debug.internalConsoleOptions": "neverOpen",

@@ -1,21 +1,19 @@
 package com.fernando.func.send.email.dto;
 
-public class Follower extends User {
+public class Follower  {
     private Long id;
     private String username;
     private String names;
     private String email;
-
     
+    public Follower() {
+    }
 
-    public Follower(Long id, String username, String names, String email) {
+    public  Follower(Long id, String username, String names, String email) {
         this.id = id;
         this.username = username;
         this.names = names;
         this.email = email;
-    }
-
-    public Follower() {
     }
 
     public Long getId() {

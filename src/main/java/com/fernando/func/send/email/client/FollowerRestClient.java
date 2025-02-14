@@ -1,7 +1,9 @@
 package com.fernando.func.send.email.client;
 
-import java.net.http.HttpResponse;
+import com.fernando.func.send.email.dto.Follower;
+
+import java.util.List;
 
 public interface FollowerRestClient {
-    HttpResponse<String> findFollowers(Long authorId,String token);
+    List<Follower> findFollowers(Long authorId, String token);
 }

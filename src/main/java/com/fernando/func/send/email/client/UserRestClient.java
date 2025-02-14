@@ -1,7 +1,7 @@
 package com.fernando.func.send.email.client;
 
-import java.net.http.HttpResponse;
+import com.fernando.func.send.email.dto.User;
 
 public interface UserRestClient {
-    HttpResponse<String> findById(Long userId,String token);
+    User findById(Long userId, String token) ;
 }
