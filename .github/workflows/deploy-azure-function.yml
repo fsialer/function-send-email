@@ -4,7 +4,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    needs: [create-function]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
