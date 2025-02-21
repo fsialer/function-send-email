@@ -39,6 +39,7 @@ jobs:
             --runtime-version "21.0" \
             --name ${{ secrets.AZURE_FUNCTION_NAME }} \
             --storage-account ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --storage-container ${{ secrets.AZURE_STORAGE_CONTAINER }} \
             --functions-version 4 \
             --os-type Linux
   build-and-deploy:
