@@ -88,4 +88,4 @@ jobs:
 
         with:
           app-name: ${{ secrets.AZURE_FUNCTION_NAME }}
-          package: target/*.jar  # Ajusta el archivo de salida según tu configuración
+          package: target/function-send-email-1.0-SNAPSHOT.jar  # Ajusta el archivo de salida según tu configuración
