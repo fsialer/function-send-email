@@ -12,12 +12,12 @@ jobs:
       # 2. Configuración de Azure CLI
       - name: Set up Azure CLI
         uses: azure/setup-azurecli@v1
-#
-#      # 3. Iniciar sesión en Azure
-#      - name: Azure Login
-#        uses: azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # 3. Iniciar sesión en Azure
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 #
 #      # 4. Crear un grupo de recursos (si no existe)
 #      - name: Create Resource Group
