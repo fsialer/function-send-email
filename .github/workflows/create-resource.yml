@@ -5,13 +5,13 @@ jobs:
   create-function:
     runs-on: ubuntu-latest
     steps:
-#      # 1. Checkout del código
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#
-#      # 2. Configuración de Azure CLI
-#      - name: Set up Azure CLI
-#        uses: azure/setup-azurecli@v1
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Configuración de Azure CLI
+      - name: Set up Azure CLI
+        uses: azure/setup-azurecli@v1
 #
 #      # 3. Iniciar sesión en Azure
 #      - name: Azure Login
