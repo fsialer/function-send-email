@@ -66,7 +66,12 @@ jobs:
       - name: Build with Maven
         run: |
           mvn clean package
-          ls target/
+          mkdir -p package
+          cp target/*.jar package/
+          cd package
+          zip -r ../function.zip .  # Comprimir archivos en function.zip
+          cd ..
+          ls -l function.zip  # Verificar que el zip se creó correctamente
 #      - name: Set up Maven
 #        uses: actions/setup-java@v2
 #        with:
@@ -88,4 +93,4 @@ jobs:
 
         with:
           app-name: ${{ secrets.AZURE_FUNCTION_NAME }}
-          package: target/function-send-email-1.0-SNAPSHOT.jar  # Ajusta el archivo de salida según tu configuración
+          package: function.zip  # Ajusta el archivo de salida según tu configuración
