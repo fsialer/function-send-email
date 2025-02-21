@@ -9,9 +9,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Configuración de Azure CLI
-      - name: Set up Azure CLI
-        uses: azure/setup-azurecli@v1
+#      # 2. Configuración de Azure CLI
+#      - name: Login to Azure
+#        uses: azure/setup-azurecli@v1
 
       # 3. Iniciar sesión en Azure
       - name: Azure Login
