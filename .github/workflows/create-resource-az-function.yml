@@ -1,0 +1,26 @@
+name: CREATE RESOURCES AZURE FUNCTIONS
+on:
+  workflow_dispatch:
+jobs:
+  create-function:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create Function App
+        run: |
+          az functionapp create \
+            -g ${{ secrets.AZURE_RESOURCE_GROUP }} \
+            --consumption-plan-location ${{ secrets.AZURE_LOCATION }} \
+            --runtime java \
+            --runtime-version "21.0" \
+            --name ${{ secrets.AZURE_FUNCTION_NAME }} \
+            --storage-account ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --functions-version 4 \
+            --os-type Linux
