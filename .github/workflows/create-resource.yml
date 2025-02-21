@@ -36,7 +36,7 @@ jobs:
             -g ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --consumption-plan-location ${{ secrets.AZURE_LOCATION }} \
             --runtime java \
-            --runtime-version 21 \
+            --runtime-version "21.0" \
             --name ${{ secrets.AZURE_FUNCTION_NAME }} \
             --storage-account ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
             --functions-version 4 \
