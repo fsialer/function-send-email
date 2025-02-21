@@ -53,15 +53,27 @@ jobs:
         with:
           java-version: 21
           distribution: 'corretto' # Alternative distribution options are available.
-          cache: 'maven'
-
+#          cache: 'maven'
+      # Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      # Build the application
+      - name: Build with Maven
+        run: |
+          mvn clean package
+          ls target/
 #      - name: Set up Maven
 #        uses: actions/setup-java@v2
 #        with:
 #          maven-version: '3.x'  # Usar la versión adecuada de Maven
 
-      - name: Build with Maven
-        run: mvn clean package
+#      - name: Build with Maven
+#        run: mvn clean package
 
       - name: Azure Login
         uses: azure/login@v1
