@@ -53,11 +53,12 @@ jobs:
         with:
           java-version: 21
           distribution: 'corretto' # Alternative distribution options are available.
+          cache: 'maven'
 
-      - name: Set up Maven
-        uses: actions/setup-java@v2
-        with:
-          maven-version: '3.x'  # Usar la versión adecuada de Maven
+#      - name: Set up Maven
+#        uses: actions/setup-java@v2
+#        with:
+#          maven-version: '3.x'  # Usar la versión adecuada de Maven
 
       - name: Build with Maven
         run: mvn clean package
