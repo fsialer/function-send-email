@@ -5,31 +5,14 @@ jobs:
   create-function:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout del código
       - name: Checkout code
         uses: actions/checkout@v2
 
-#      # 2. Configuración de Azure CLI
-#      - name: Login to Azure
-#        uses: azure/setup-azurecli@v1
-
-      # 3. Iniciar sesión en Azure
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-#
-#      # 4. Crear un grupo de recursos (si no existe)
-#      - name: Create Resource Group
-#        run: |
-#          az group create --name ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }}
-#
-#      # 5. Crear la cuenta de almacenamiento para la Function App (si no existe)
-#      - name: Create Storage Account
-#        run: |
-#          az storage account create --name ${{ secrets.AZURE_STORAGE_ACCOUNT }}  -g ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }} --sku Standard_LRS
 
-      # 6. Crear la Function App
       - name: Create Function App
         run: |
           az functionapp create \
@@ -39,7 +22,6 @@ jobs:
             --runtime-version "21.0" \
             --name ${{ secrets.AZURE_FUNCTION_NAME }} \
             --storage-account ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
-            --storage-container ${{ secrets.AZURE_STORAGE_CONTAINER }} \
             --functions-version 4 \
             --os-type Linux
   build-and-deploy:
@@ -53,9 +35,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 21
-          distribution: 'corretto' # Alternative distribution options are available.
-#          cache: 'maven'
-      # Cache Maven dependencies
+          distribution: 'corretto'
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -63,7 +43,7 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      # Build the application
+
       - name: Build with Maven
         run: |
           mvn clean package
@@ -73,25 +53,14 @@ jobs:
           zip -r ../function.zip .  # Comprimir archivos en function.zip
           cd ..
           ls -l function.zip  # Verificar que el zip se creó correctamente
-#      - name: Set up Maven
-#        uses: actions/setup-java@v2
-#        with:
-#          maven-version: '3.x'  # Usar la versión adecuada de Maven
-
-#      - name: Build with Maven
-#        run: mvn clean package
 
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Verify files jar
-        run: |
-          ls target/*.jar
 
       - name: Deploy to Azure Function
         uses: azure/functions-action@v1
-
         with:
           app-name: ${{ secrets.AZURE_FUNCTION_NAME }}
-          package: function.zip  # Ajusta el archivo de salida según tu configuración
+          package: function.zip
