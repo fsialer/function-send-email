@@ -39,7 +39,8 @@ jobs:
             --runtime-version 21 \
             --name ${{ secrets.AZURE_FUNCTION_NAME }} \
             --storage-account ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
-            --functions-version 4
+            --functions-version 4 \
+            --os-type Linux
   build-and-deploy:
     runs-on: ubuntu-latest
     needs: [create-function]
