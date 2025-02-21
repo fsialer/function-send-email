@@ -119,7 +119,7 @@
                     <!-- <disableAppInsights></disableAppInsights> -->
                     <runtime>
                         <!-- runtime os, could be windows, linux or docker-->
-                        <os>windows</os>
+                        <os>linux</os>
                         <javaVersion>21</javaVersion>
                     </runtime>
                     <appSettings>
