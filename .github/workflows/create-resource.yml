@@ -5,29 +5,29 @@ jobs:
   create-function:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout del código
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # 2. Configuración de Azure CLI
-      - name: Set up Azure CLI
-        uses: azure/setup-azurecli@v1
-
-      # 3. Iniciar sesión en Azure
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # 4. Crear un grupo de recursos (si no existe)
-      - name: Create Resource Group
-        run: |
-          az group create --name ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }}
-
-      # 5. Crear la cuenta de almacenamiento para la Function App (si no existe)
-      - name: Create Storage Account
-        run: |
-          az storage account create --name ${{ secrets.AZURE_STORAGE_ACCOUNT }}  -g ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }} --sku Standard_LRS
+#      # 1. Checkout del código
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      # 2. Configuración de Azure CLI
+#      - name: Set up Azure CLI
+#        uses: azure/setup-azurecli@v1
+#
+#      # 3. Iniciar sesión en Azure
+#      - name: Azure Login
+#        uses: azure/login@v1
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#
+#      # 4. Crear un grupo de recursos (si no existe)
+#      - name: Create Resource Group
+#        run: |
+#          az group create --name ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }}
+#
+#      # 5. Crear la cuenta de almacenamiento para la Function App (si no existe)
+#      - name: Create Storage Account
+#        run: |
+#          az storage account create --name ${{ secrets.AZURE_STORAGE_ACCOUNT }}  -g ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }} --sku Standard_LRS
 
       # 6. Crear la Function App
       - name: Create Function App
